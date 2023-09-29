@@ -31,7 +31,10 @@ export default function LoginBox() {
       <TouchableOpacity
         style={styles.login_button}
         onPress={() => {
-          navigation.navigate("SectionList");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "SectionList" }],
+          });
         }}
       >
         <Text>ログイン</Text>

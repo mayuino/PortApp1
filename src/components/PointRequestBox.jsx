@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View, Text, StyleSheet, TextInput,
 } from "react-native";
@@ -6,6 +6,7 @@ import SectionTitle from "./SectionTitle";
 import RequestButton from "./RequestButton";
 
 export default function PointRequestBox() {
+  const [usepoint, setUsepoint] = useState("");
   return (
     <View style={styles.point_request_box}>
       <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
@@ -20,7 +21,15 @@ export default function PointRequestBox() {
       <View style={styles.usable_point_frame}>
         <Text style={styles.usable_point_title}>利用ポイント</Text>
         <View style={styles.point_box}>
-          <TextInput style={styles.pointInput} value="" keyboardType="number-pad" autoFocus />
+          <TextInput
+            style={styles.pointInput}
+            value={usepoint}
+            onChangeText={(text) => {
+              setUsepoint(text);
+            }}
+            keyboardType="number-pad"
+            autoFocus
+          />
         </View>
         <Text style={styles.point_sufix}>Pt</Text>
       </View>

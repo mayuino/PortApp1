@@ -2,7 +2,7 @@ import React from "react";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import { GestureHandlerRootView } from "react-native-gesture-handler";
+import "react-native-gesture-handler";
 
 import SectionListScreen from "./src/screens/SectionListScreen";
 import PointDetailScreen from "./src/screens/PointDetailScreen";
@@ -18,13 +18,14 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignUpConfirm"
+        initialRouteName="Login"
         screenOptions={{
           headerStyle: { backgroundColor: "#A9EA3E" },
           headerTitleStyle: { color: "#ffffff" },
           headerTitle: "WORKERS",
           headerTintColor: "#ffffff",
           headerBackTitle: "Back",
+          gestureDirection: "holizontal",
         }}
       >
         <Stack.Screen name="Login" component={LoginScreen} />
