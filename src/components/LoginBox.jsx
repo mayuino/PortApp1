@@ -6,9 +6,11 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import SectionTitle from "./SectionTitle";
 
 export default function LoginBox() {
+  const navigation = useNavigation();
   return (
     <View style={styles.login_box}>
       <SectionTitle subtitle="LOG IN">ログイン</SectionTitle>
@@ -26,7 +28,12 @@ export default function LoginBox() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.login_button}>
+      <TouchableOpacity
+        style={styles.login_button}
+        onPress={() => {
+          navigation.navigate("SectionList");
+        }}
+      >
         <Text>ログイン</Text>
       </TouchableOpacity>
     </View>

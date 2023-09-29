@@ -6,11 +6,11 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-import { func } from "prop-types";
+import { useNavigation } from "@react-navigation/native";
 import SectionTitle from "./SectionTitle";
 
-export default function SignUpBox(props) {
-  const { onPress } = props;
+export default function SignUpBox() {
+  const navigation = useNavigation();
   return (
     <View style={styles.sign_up_box}>
       <SectionTitle subtitle="SIGN UP">新規登録</SectionTitle>
@@ -64,20 +64,17 @@ export default function SignUpBox(props) {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.sign_up_button} onPress={onPress}>
+      <TouchableOpacity
+        style={styles.sign_up_button}
+        onPress={() => {
+          navigation.navigate("SignUpConfirm");
+        }}
+      >
         <Text style={styles.signup_btn_title}>登録</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-SignUpBox.propTypes = {
-  onPress: func,
-};
-
-SignUpBox.defaultProps = {
-  onPress: null,
-};
 
 const styles = StyleSheet.create({
   sign_up_box: {

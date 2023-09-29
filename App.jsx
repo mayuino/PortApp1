@@ -10,6 +10,7 @@ import PointRequestScreen from "./src/screens/PointRequestScreen";
 import PointUsedScreen from "./src/screens/PointUsedScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
+import SignUpConfirmScreen from "./src/screens/SignUpConfirmScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +18,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SignUp"
+        initialRouteName="SignUpConfirm"
         screenOptions={{
           headerStyle: { backgroundColor: "#A9EA3E" },
           headerTitleStyle: { color: "#ffffff" },
@@ -28,6 +29,7 @@ export default function App() {
       >
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        <Stack.Screen name="SignUpConfirm" component={SignUpConfirmScreen} />
         <Stack.Screen name="SectionList" component={SectionListScreen} />
         <Stack.Screen name="PointDetail" component={PointDetailScreen} />
         <Stack.Screen name="PointRequest" component={PointRequestScreen} />
