@@ -1,15 +1,22 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { string } from "prop-types";
 
-export default function SectionTitle() {
+export default function SectionTitle(props) {
+  const { children, subtitle } = props;
   return (
     <View>
-      <Text style={styles.detail_title}>社員ポイント</Text>
+      <Text style={styles.detail_title}>{children}</Text>
       <Text style={styles.title_holizon}>--------------------</Text>
-      <Text style={styles.detil_subtitle}>CONTRIBUTION POINT</Text>
+      <Text style={styles.detil_subtitle}>{subtitle}</Text>
     </View>
   );
 }
+
+SectionTitle.propTypes = {
+  children: string.isRequired,
+  subtitle: string.isRequired,
+};
 
 const styles = StyleSheet.create({
   detail_title: {

@@ -8,7 +8,7 @@ import RequestButton from "./RequestButton";
 export default function PointRequestBox() {
   return (
     <View style={styles.point_request_box}>
-      <SectionTitle />
+      <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
       <View style={styles.usable_point_frame}>
         <Text style={styles.usable_point_title}>利用可能ポイント</Text>
         <View style={styles.point_box}>

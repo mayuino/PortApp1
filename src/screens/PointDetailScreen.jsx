@@ -12,7 +12,7 @@ export default function PointDetailScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.point_detail_box}>
-        <SectionTitle />
+        <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
         <UsablePoint
           onPress={() => {
             navigation.navigate("PointRequest");

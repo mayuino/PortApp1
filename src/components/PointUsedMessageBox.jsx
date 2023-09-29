@@ -5,7 +5,7 @@ import SectionTitle from "./SectionTitle";
 export default function PointUsedMessageBox() {
   return (
     <View style={styles.point_request_box}>
-      <SectionTitle />
+      <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
       <Text style={styles.point_used_message}>
         ポイントの利用申請が完了しました。
       </Text>
