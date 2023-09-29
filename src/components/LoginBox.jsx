@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,20 +11,40 @@ import SectionTitle from "./SectionTitle";
 
 export default function LoginBox() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <View style={styles.login_box}>
       <SectionTitle subtitle="LOG IN">ログイン</SectionTitle>
       <View style={styles.input_box_frame}>
         <Text>ID</Text>
         <View style={styles.input_box}>
-          <TextInput />
+          <TextInput
+            style={styles.input_txt}
+            autoFocus
+            placeholder="Email Address"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+            }}
+            autoCapitalize="none"
+            textContentType="emailAddress"
+          />
         </View>
       </View>
 
       <View style={styles.input_box_frame}>
         <Text>パスワード</Text>
         <View style={styles.input_box}>
-          <TextInput />
+          <TextInput
+            style={styles.input_txt}
+            placeholder="PassWord"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            autoCapitalize="none"
+            secureTextEntry
+            textContentType="password"
+          />
         </View>
       </View>
 
@@ -39,6 +59,19 @@ export default function LoginBox() {
       >
         <Text>ログイン</Text>
       </TouchableOpacity>
+      <View style={styles.link_frame}>
+        <Text>ユーザー登録がお済みでない方は</Text>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "SignUp" }],
+            });
+          }}
+        >
+          <Text style={styles.link_txt}>こちら</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -60,7 +93,8 @@ const styles = StyleSheet.create({
     height: 30,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 32,
+    marginTop: 12,
+    marginBottom: 12,
     alignSelf: "center",
   },
   login_button_title: {
@@ -73,6 +107,7 @@ const styles = StyleSheet.create({
     height: 30,
     backgroundColor: "#ffffff",
     borderRadius: 2,
+    justifyContent: "center",
 
     marginTop: 5,
     marginBottom: 16,
@@ -81,6 +116,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   input_txt: {
-    paddingVertical: 5,
+
+    paddingLeft: 10,
+  },
+  link_frame: {
+    marginTop: 10,
+    flexDirection: "row",
+  },
+  link_txt: {
+    color: "#257EE5",
+    fontWeight: "bold",
   },
 });

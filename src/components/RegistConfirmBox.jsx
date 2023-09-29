@@ -31,7 +31,10 @@ export default function RegistConfirmBox() {
         <TouchableOpacity
           style={styles.fix_btn}
           onPress={() => {
-            navigation.navigate("SignUp");
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "SignUp" }],
+            });
           }}
         >
           <Text style={styles.btn_txt}>修正</Text>
@@ -39,7 +42,10 @@ export default function RegistConfirmBox() {
         <TouchableOpacity
           style={styles.regist_btn}
           onPress={() => {
-            navigation.navigate("Login");
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            });
           }}
         >
           <Text style={styles.btn_txt}>登録</Text>
