@@ -1,13 +1,11 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import AppBar from "../components/AppBar";
 import SectionList from "../components/SectionList";
 import AppFooter from "../components/AppFooter";
 
 export default function SectionListScreen() {
   return (
     <View style={styles.container}>
-      <AppBar />
       <SectionList />
       <AppFooter />
     </View>

@@ -1,19 +1,25 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import SectionItem from "./SectionItem";
+// eslint-disable-next-line import/order
+import { useNavigation } from "@react-navigation/native";
 
 export default function SectionList() {
+  const navigation = useNavigation();
   return (
     <View>
       <View style={styles.sectionList}>
-        <View style={styles.sectionListItem}>
-          <Text style={styles.sectionListItemTitle}>社員ポイント</Text>
-          <Text style={styles.sectionListItemSubTitle}>CONTRIBUTION POINT</Text>
-        </View>
-
-        <View style={styles.sectionListItem}>
-          <Text style={styles.sectionListItemTitle}>社員ポイント</Text>
-          <Text style={styles.sectionListItemSubTitle}>CONTRIBUTION POINT</Text>
-        </View>
+        <SectionItem subtitle="NEWS">最新のニュース</SectionItem>
+        <SectionItem
+          subtitle="CONTRIBUTION POINT"
+          onPress={() => {
+            navigation.navigate("PointDetail");
+          }}
+        >
+          社員ポイント
+        </SectionItem>
+        <SectionItem subtitle="QUESTIONAIR">アンケート</SectionItem>
+        <SectionItem subtitle="REQUEST HOLIDAY">有給申請</SectionItem>
       </View>
     </View>
   );
@@ -25,32 +31,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     height: "75%",
     justifyContent: "flex-start",
-  },
-  sectionListItem: {
-    marginTop: 16,
-    width: "95%",
-    height: 91,
-    backgroundColor: "rgba(165,165,165,0.7)",
-    borderRadius: 10,
-    elevation: 0,
-    shadowColor: "#000000",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-  },
-  sectionListItemTitle: {
-    color: "#ffffff",
-    fontSize: 18,
-    fontWeight: "bold",
-    position: "absolute",
-    top: 38,
-    left: 206,
-  },
-  sectionListItemSubTitle: {
-    color: "#ffffff",
-    fontSize: 12,
-    position: "absolute",
-    bottom: 13,
-    left: 206,
   },
 });

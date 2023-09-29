@@ -1,7 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View, Text, StyleSheet, TouchableOpacity,
+} from "react-native";
+import { func } from "prop-types";
 
-export default function UsablePoint() {
+export default function UsablePoint(props) {
+  const { onPress } = props;
   return (
     <View>
       <View style={styles.usable_point_frame}>
@@ -12,12 +16,19 @@ export default function UsablePoint() {
         <Text style={styles.point_sufix}>Pt</Text>
       </View>
 
-      <View style={styles.use_point_button}>
+      <TouchableOpacity style={styles.use_point_button} onPress={onPress}>
         <Text style={styles.use_point_button_title}>ポイントを使う</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
+
+UsablePoint.propTypes = {
+  onPress: func,
+};
+UsablePoint.defaultProps = {
+  onPress: null,
+};
 
 const styles = StyleSheet.create({
   usable_point_frame: {

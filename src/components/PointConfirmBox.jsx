@@ -1,7 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import RequestButton from "./RequestButton";
+// eslint-disable-next-line import/order
+import { useNavigation } from "@react-navigation/native";
 
 export default function PointConfirmBox() {
+  const navigation = useNavigation();
   return (
     <View style={styles.point_request_box}>
       <Text style={styles.confirm_message}>この内容で申請しますか。</Text>
@@ -21,9 +25,13 @@ export default function PointConfirmBox() {
         <Text style={styles.confirm_title}>ポイント残高</Text>
         <Text style={styles.confirm_data}>10Pt</Text>
       </View>
-      <View style={styles.use_point_button}>
-        <Text style={styles.use_point_button_title}>申請する</Text>
-      </View>
+      <RequestButton
+        onPress={() => {
+          navigation.navigate("PointUsed");
+        }}
+      >
+        申請する
+      </RequestButton>
     </View>
   );
 }
@@ -55,20 +63,5 @@ const styles = StyleSheet.create({
   },
   confirm_data: {
     fontSize: 12,
-  },
-  use_point_button: {
-    backgroundColor: "#A9EA3E",
-    borderRadius: 5,
-    width: 161,
-    height: 35,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 18,
-    alignSelf: "center",
-  },
-  use_point_button_title: {
-    color: "#ffffff",
-    fontSize: 12,
-    fontWeight: "bold",
   },
 });

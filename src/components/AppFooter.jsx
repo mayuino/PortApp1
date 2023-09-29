@@ -1,14 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 export default function AppFooter() {
   return (
     <View style={styles.appFooter}>
       <View>
-        <Text>bell</Text>
+        <Feather name="bell" size={28} color="white" />
       </View>
       <View>
-        <Text>mail</Text>
+        <Feather name="mail" size={28} color="white" />
       </View>
     </View>
   );
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "8%",
     backgroundColor: "#A9EA3E",
-    paddingVertical: 20,
+    paddingTop: 10,
     paddingHorizontal: 28,
     flexDirection: "row",
     justifyContent: "space-between",

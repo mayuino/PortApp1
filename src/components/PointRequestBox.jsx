@@ -1,6 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View, Text, StyleSheet, TextInput,
+} from "react-native";
 import SectionTitle from "./SectionTitle";
+import RequestButton from "./RequestButton";
 
 export default function PointRequestBox() {
   return (
@@ -17,14 +20,11 @@ export default function PointRequestBox() {
       <View style={styles.usable_point_frame}>
         <Text style={styles.usable_point_title}>利用ポイント</Text>
         <View style={styles.point_box}>
-          <Text style={styles.point}>ユーザー入力</Text>
+          <TextInput style={styles.pointInput} value="" keyboardType="number-pad" autoFocus />
         </View>
         <Text style={styles.point_sufix}>Pt</Text>
       </View>
-
-      <View style={styles.use_point_button}>
-        <Text style={styles.use_point_button_title}>申請する</Text>
-      </View>
+      <RequestButton>申請する</RequestButton>
     </View>
   );
 }
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 24,
     paddingVertical: 18,
+    marginVertical: 20,
   },
   usable_point_frame: {
     flexDirection: "row",
@@ -65,6 +66,13 @@ const styles = StyleSheet.create({
   point: {
     paddingTop: 5,
     paddingRight: 5,
+    flex: 1,
+  },
+  pointInput: {
+    paddingTop: 5,
+    paddingRight: 5,
+    flex: 1,
+    textAlignVertical: "auto",
   },
   use_point_button: {
     backgroundColor: "#A9EA3E",

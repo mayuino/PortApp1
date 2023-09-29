@@ -1,6 +1,5 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import AppBar from "../components/AppBar";
 import AppFooter from "../components/AppFooter";
 import PointRequestBox from "../components/PointRequestBox";
 import PointConfirmBox from "../components/PointConfirmBox";
@@ -8,9 +7,8 @@ import PointConfirmBox from "../components/PointConfirmBox";
 export default function PointRequestScreen() {
   return (
     <View style={styles.container}>
-      <AppBar />
       <PointRequestBox />
-      <PointConfirmBox />
+      <PointConfirmBox onPress={() => {}} />
 
       <AppFooter />
     </View>

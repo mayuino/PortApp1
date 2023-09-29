@@ -1,13 +1,23 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { func } from "prop-types";
 
-export default function BackButton() {
+export default function BackButton(props) {
+  const { onPress } = props;
   return (
-    <View style={styles.back_button}>
+    <TouchableOpacity style={styles.back_button} onPress={onPress}>
       <Text style={styles.back_title}>もどる</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
+
+BackButton.propTypes = {
+  onPress: func,
+};
+
+BackButton.defaultProps = {
+  onPress: null,
+};
 
 const styles = StyleSheet.create({
   back_button: {
@@ -17,7 +27,7 @@ const styles = StyleSheet.create({
     height: 35,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: -190,
+    marginTop: -140,
     alignSelf: "center",
   },
   back_title: {

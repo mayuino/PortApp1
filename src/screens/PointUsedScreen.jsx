@@ -1,16 +1,22 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import AppBar from "../components/AppBar";
+
 import AppFooter from "../components/AppFooter";
 import PointUsedMessageBox from "../components/PointUsedMessageBox";
 import BackButton from "../components/BackButton";
+// eslint-disable-next-line import/order
+import { useNavigation } from "@react-navigation/native";
 
 export default function PointUsedScreen() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <AppBar />
       <PointUsedMessageBox />
-      <BackButton />
+      <BackButton
+        onPress={() => {
+          navigation.navigate("PointDetail");
+        }}
+      />
       <AppFooter />
     </View>
   );

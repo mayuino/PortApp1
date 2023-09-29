@@ -1,18 +1,23 @@
 import React from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
-import AppBar from "../components/AppBar";
 import AppFooter from "../components/AppFooter";
 import SectionTitle from "../components/SectionTitle";
 import UsablePoint from "../components/UsablePoint";
 import PointDetail from "../components/PointDetail";
+// eslint-disable-next-line import/order
+import { useNavigation } from "@react-navigation/native";
 
 export default function PointDetailScreen() {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <AppBar />
       <ScrollView style={styles.point_detail_box}>
         <SectionTitle />
-        <UsablePoint />
+        <UsablePoint
+          onPress={() => {
+            navigation.navigate("PointRequest");
+          }}
+        />
         <PointDetail />
       </ScrollView>
       <AppFooter />
