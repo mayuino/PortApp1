@@ -19,9 +19,8 @@ export default function LoginBox() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const auth = getAuth();
   useEffect(() => {
-    const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         navigation.reset({
@@ -33,9 +32,8 @@ export default function LoginBox() {
     return unsubscribe;
   }, []);
 
-  function handlePress() {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+  const handlePress = async () => {
+    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const { user } = userCredential;
         console.log(user.uid);
@@ -47,7 +45,7 @@ export default function LoginBox() {
       .catch((error) => {
         Alert.alert(error.code);
       });
-  }
+  };
   return (
     <View style={styles.login_box}>
       <SectionTitle subtitle="LOG IN">ログイン</SectionTitle>

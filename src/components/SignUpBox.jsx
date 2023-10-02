@@ -27,17 +27,15 @@ export default function SignUpBox() {
   const handlePress = async () => {
     try {
       const auth = getAuth();
-      await createUserWithEmailAndPassword(
-        auth,
-        id,
-        password,
-      ).then((userCredential) => {
-        console.log(userCredential.user.uid);
-        navigation.reset({
-          index: 0,
-          routes: [{ name: "SectionList" }],
-        });
-      });
+      await createUserWithEmailAndPassword(auth, id, password).then(
+        (userCredential) => {
+          console.log(userCredential.user.uid);
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "SectionList" }],
+          });
+        },
+      );
     } catch (error) {
       console.log(error.code, error.message);
       Alert.alert(error.code);

@@ -2,11 +2,30 @@ import React, { useState } from "react";
 import {
   View, Text, StyleSheet, TextInput,
 } from "react-native";
+
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth/react-native";
+
 import SectionTitle from "./SectionTitle";
 import RequestButton from "./RequestButton";
 
 export default function PointRequestBox() {
+  const auth = getAuth();
   const [usepoint, setUsepoint] = useState("");
+  const handlePress = async () => {
+    const db = getFirestore();
+    await addDoc(collection(db, `users/${auth.currentUser.uid}/points`), {
+      point: usepoint,
+      use_objective: "利用申請",
+      updatedAt: new Date(),
+    })
+      .then((docRef) => {
+        console.log("Created", docRef.id);
+      })
+      .catch((error) => {
+        console.log("Error!", error);
+      });
+  };
   return (
     <View style={styles.point_request_box}>
       <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
@@ -33,7 +52,7 @@ export default function PointRequestBox() {
         </View>
         <Text style={styles.point_sufix}>Pt</Text>
       </View>
-      <RequestButton>申請する</RequestButton>
+      <RequestButton onPress={handlePress}>申請する</RequestButton>
     </View>
   );
 }
@@ -66,6 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 2,
     alignItems: "flex-end",
+    justifyContent: "center",
   },
   point_sufix: {
     fontSize: 12,
@@ -78,10 +98,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pointInput: {
-    paddingTop: 5,
     paddingRight: 5,
     flex: 1,
-    textAlignVertical: "auto",
   },
   use_point_button: {
     backgroundColor: "#A9EA3E",

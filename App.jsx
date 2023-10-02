@@ -6,8 +6,6 @@ import "react-native-gesture-handler";
 
 import { getApp, getApps, initializeApp } from "firebase/app";
 
-import "firebase/firestore";
-
 import SectionListScreen from "./src/screens/SectionListScreen";
 import PointDetailScreen from "./src/screens/PointDetailScreen";
 import PointRequestScreen from "./src/screens/PointRequestScreen";
@@ -16,6 +14,8 @@ import LoginScreen from "./src/screens/LoginScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import SignUpConfirmScreen from "./src/screens/SignUpConfirmScreen";
 import { firebaseConfig } from "./env";
+
+require("firebase/firestore");
 
 const Stack = createNativeStackNavigator();
 

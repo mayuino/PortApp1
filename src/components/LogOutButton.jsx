@@ -7,9 +7,9 @@ import {
 
 export default function LogOutButton() {
   const navigation = useNavigation();
-  function handlePress() {
+  const handlePress = async () => {
     const auth = getAuth();
-    signOut(auth)
+    await signOut(auth)
       .then(() => {
         navigation.reset({
           index: 0,
@@ -19,7 +19,7 @@ export default function LogOutButton() {
       .catch(() => {
         Alert.alert("ログアウトに失敗しました");
       });
-  }
+  };
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Text style={styles.label}>ログアウト</Text>
