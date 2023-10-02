@@ -1,13 +1,26 @@
 import React from "react";
-import {
-  View, Text, StyleSheet, TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 // eslint-disable-next-line import/order
 import { useNavigation } from "@react-navigation/native";
+
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+} from "firebase/auth/react-native";
+
 import SectionTitle from "./SectionTitle";
 
 export default function RegistConfirmBox() {
   const navigation = useNavigation();
+
+  const handleRegist = async () => {
+ 
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
   return (
     <View style={styles.regist_confirm_box}>
       <SectionTitle subtitle="REGIST CONFIRM">登録確認</SectionTitle>
@@ -21,8 +34,8 @@ export default function RegistConfirmBox() {
         </View>
         <View>
           <Text style={styles.data_txt}>テスト太郎</Text>
-          <Text style={styles.data_txt}>worker@emp.com</Text>
-          <Text style={styles.data_txt}>123asdfg</Text>
+          <Text style={styles.data_txt}></Text>
+          <Text style={styles.data_txt}></Text>
           <Text style={styles.data_txt}>1995年2月3日</Text>
           <Text style={styles.data_txt}>2023年9月1日</Text>
         </View>
@@ -39,15 +52,7 @@ export default function RegistConfirmBox() {
         >
           <Text style={styles.btn_txt}>修正</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.regist_btn}
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: "Login" }],
-            });
-          }}
-        >
+        <TouchableOpacity style={styles.regist_btn} onPress={handleRegist}>
           <Text style={styles.btn_txt}>登録</Text>
         </TouchableOpacity>
       </View>

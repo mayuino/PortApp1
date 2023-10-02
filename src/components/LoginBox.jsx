@@ -5,14 +5,35 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+} from "firebase/auth/react-native";
 import SectionTitle from "./SectionTitle";
 
 export default function LoginBox() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  function handlePress() {
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        console.log(user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "SectionList" }],
+        });
+      })
+      .catch((error) => {
+        Alert.alert(error.code);
+      });
+  }
   return (
     <View style={styles.login_box}>
       <SectionTitle subtitle="LOG IN">ログイン</SectionTitle>
@@ -48,15 +69,7 @@ export default function LoginBox() {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.login_button}
-        onPress={() => {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "SectionList" }],
-          });
-        }}
-      >
+      <TouchableOpacity style={styles.login_button} onPress={handlePress}>
         <Text>ログイン</Text>
       </TouchableOpacity>
       <View style={styles.link_frame}>
@@ -116,7 +129,6 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   input_txt: {
-
     paddingLeft: 10,
   },
   link_frame: {

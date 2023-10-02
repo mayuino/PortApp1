@@ -5,8 +5,13 @@ import {
   Text,
   TextInput,
   StyleSheet,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+} from "firebase/auth/react-native";
 import SectionTitle from "./SectionTitle";
 
 export default function SignUpBox() {
@@ -18,6 +23,26 @@ export default function SignUpBox() {
   const [repassword, setRepassword] = useState("");
   const [birth, setBirth] = useState("");
   const [enterday, setEnterday] = useState("");
+
+  const handlePress = async () => {
+    try {
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(
+        auth,
+        id,
+        password,
+      ).then((userCredential) => {
+        console.log(userCredential.user.uid);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "SectionList" }],
+        });
+      });
+    } catch (error) {
+      console.log(error.code, error.message);
+      Alert.alert(error.code);
+    }
+  };
   return (
     <View style={styles.sign_up_box}>
       <SectionTitle subtitle="SIGN UP">新規登録</SectionTitle>
@@ -119,15 +144,7 @@ export default function SignUpBox() {
         </View>
       </View>
 
-      <TouchableOpacity
-        style={styles.sign_up_button}
-        onPress={() => {
-          navigation.reset({
-            index: 0,
-            routes: [{ name: "SignUpConfirm" }],
-          });
-        }}
-      >
+      <TouchableOpacity style={styles.sign_up_button} onPress={handlePress}>
         <Text style={styles.signup_btn_title}>登録</Text>
       </TouchableOpacity>
     </View>
