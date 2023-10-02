@@ -23,12 +23,6 @@ export const firebase = !getApps.length
   ? initializeApp(firebaseConfig)
   : getApp();
 
-// const app = initializeApp(firebaseConfig);
-
-// initializeAuth(app, {
-//   persistence: getReactNativePersistence(AsyncStorage),
-// });
-
 export default function App() {
   return (
     <NavigationContainer>

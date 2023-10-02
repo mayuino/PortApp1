@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import {
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from "firebase/auth/react-native";
 import SectionTitle from "./SectionTitle";
@@ -18,6 +19,19 @@ export default function LoginBox() {
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "SectionList" }],
+        });
+      }
+    });
+    return unsubscribe;
+  }, []);
 
   function handlePress() {
     const auth = getAuth();
@@ -78,7 +92,6 @@ export default function LoginBox() {
           onPress={() => {
             navigation.reset({
               index: 0,
-              routes: [{ name: "SignUp" }],
             });
           }}
         >
