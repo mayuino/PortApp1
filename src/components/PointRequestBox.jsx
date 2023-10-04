@@ -1,65 +1,150 @@
 import React, { useState } from "react";
 import {
-  View, Text, StyleSheet, TextInput,
+  View, Text, StyleSheet, TextInput, Alert,
 } from "react-native";
-
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import PropTypes from "prop-types";
 import { getAuth } from "firebase/auth/react-native";
-
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import SectionTitle from "./SectionTitle";
 import RequestButton from "./RequestButton";
+import PointConfirmBox from "./PointConfirmBox";
 
-export default function PointRequestBox() {
+export default function PointRequestBox(props) {
+  const { usablepoint } = props;
+  const [usepoint, setUsepoint] = useState(0);
+  const [isUsepoint, setIsusepoint] = useState(false);
+  const [fee, setFee] = useState(0);
+  const [remainpoint, setRemainpoint] = useState(0);
+  const [month, setMonth] = useState(0);
+
   const auth = getAuth();
-  const [usepoint, setUsepoint] = useState("");
+
   const handlePress = async () => {
-    const db = getFirestore();
-    await addDoc(collection(db, `users/${auth.currentUser.uid}/points`), {
-      point: usepoint,
-      use_objective: "利用申請",
-      updatedAt: new Date(),
-    })
-      .then((docRef) => {
-        console.log("Created", docRef.id);
+    if (usepoint === 0) {
+      Alert.alert("10Pt単位で数字を入力してください。");
+    } else if (checkPoint(usepoint) !== 0) {
+      Alert.alert("ポイントは10ポイント単位で利用できます。");
+    } else {
+      const db = getFirestore();
+      await addDoc(collection(db, `users/${auth.currentUser.uid}/points`), {
+        point: usepoint,
+        use_objective: "利用申請",
+        updatedAt: new Date(),
       })
-      .catch((error) => {
-        console.log("Error!", error);
-      });
+        .then((docRef) => {
+          console.log("Created", docRef.id);
+          setIsusepoint(true);
+          setFee(exchangePoint(usepoint));
+          calcRemainpoint();
+          calcMonth();
+        })
+        .catch((error) => {
+          console.log("Error!", error);
+        });
+    }
   };
+  const checkPoint = (point) => {
+    const ans = point % 10;
+    return ans;
+  };
+
+  const exchangePoint = (nowUsePoint) => {
+    let point200Fee = 0;
+    let point100Fee = 0;
+    let point50Fee = 0;
+    let point10Fee = 0;
+
+    let restUsepoint = nowUsePoint;
+    // 200ポイント単位の金額を確認する
+    if (restUsepoint >= 200) {
+      const point200Change = Math.floor(usepoint / 200);
+      point200Fee = point200Change * 50000;
+      restUsepoint = nowUsePoint - point200Change * 200;
+    }
+    // 100ポイント単位の金額を確認する
+    if (restUsepoint >= 100) {
+      const point100Change = Math.floor(restUsepoint / 100);
+      point100Fee = point100Change * 23000;
+      restUsepoint -= (point100Change * 100);
+    }
+    // 50ポイント単位の金額を確認する
+    if (restUsepoint >= 50) {
+      const point50Change = Math.floor(restUsepoint / 50);
+      point50Fee = point50Change * 11000;
+      restUsepoint -= (point50Change * 50);
+    }
+    // 10ポイント単位の金額を確認する
+    if (restUsepoint >= 10) {
+      const point10Change = Math.floor(restUsepoint / 10);
+      point10Fee = point10Change * 2000;
+      restUsepoint -= (point10Change * 10);
+    }
+
+    return point200Fee + point100Fee + point50Fee + point10Fee;
+  };
+
+  const calcRemainpoint = () => {
+    const remain = usablepoint - usepoint;
+    setRemainpoint(remain);
+  };
+
+  const calcMonth = () => {
+    const d = new Date();
+    const nowMonth = d.getMonth();
+    const refMonth = nowMonth + 2;
+    setMonth(refMonth);
+  };
+
   return (
-    <View style={styles.point_request_box}>
-      <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
-      <View style={styles.usable_point_frame}>
-        <Text style={styles.usable_point_title}>利用可能ポイント</Text>
-        <View style={styles.point_box}>
-          <Text style={styles.point}>70</Text>
+    <View>
+      <View style={styles.point_request_box}>
+        <SectionTitle subtitle="CONTRIBUTION POINT">社員ポイント</SectionTitle>
+        <View style={styles.usable_point_frame}>
+          <Text style={styles.usable_point_title}>利用可能ポイント</Text>
+          <View style={styles.point_box}>
+            <Text style={styles.point}>{usablepoint}</Text>
+          </View>
+          <Text style={styles.point_sufix}>Pt</Text>
         </View>
-        <Text style={styles.point_sufix}>Pt</Text>
+
+        <View style={styles.usable_point_frame}>
+          <Text style={styles.usable_point_title}>利用ポイント</Text>
+          <View style={styles.point_box}>
+            <TextInput
+              style={styles.pointInput}
+              value={usepoint}
+              onChangeText={(text) => {
+                setUsepoint(text);
+              }}
+              keyboardType="number-pad"
+              autoFocus
+            />
+          </View>
+          <Text style={styles.point_sufix}>Pt</Text>
+        </View>
+        <RequestButton onPress={handlePress}>申請する</RequestButton>
       </View>
 
-      <View style={styles.usable_point_frame}>
-        <Text style={styles.usable_point_title}>利用ポイント</Text>
-        <View style={styles.point_box}>
-          <TextInput
-            style={styles.pointInput}
-            value={usepoint}
-            onChangeText={(text) => {
-              setUsepoint(text);
-            }}
-            keyboardType="number-pad"
-            autoFocus
-          />
-        </View>
-        <Text style={styles.point_sufix}>Pt</Text>
-      </View>
-      <RequestButton onPress={handlePress}>申請する</RequestButton>
+      {isUsepoint ? (
+        <PointConfirmBox
+          usepoint={usepoint}
+          fee={fee}
+          remain={remainpoint}
+          month={month}
+        />
+      ) : (
+        ""
+      )}
     </View>
   );
 }
 
+PointRequestBox.propTypes = {
+  usablepoint: PropTypes.string.isRequired,
+};
+
 const styles = StyleSheet.create({
   point_request_box: {
-    width: "95%",
     height: 246,
     backgroundColor: "rgba(165,165,165,0.6)",
     borderRadius: 10,

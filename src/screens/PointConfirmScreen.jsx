@@ -1,26 +1,17 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import { shape, number } from "prop-types";
 
 import AppFooter from "../components/AppFooter";
-import PointUsedMessageBox from "../components/PointUsedMessageBox";
+import PointConfirmBox from "../components/PointConfirmBox";
 
-export default function PointUsedScreen(props) {
-  const { route } = props;
-  const { remain } = route.params;
+export default function PointConfirmScreen() {
   return (
     <View style={styles.container}>
-      <PointUsedMessageBox remain={remain} />
+      <PointConfirmBox />
       <AppFooter />
     </View>
   );
 }
-
-PointUsedScreen.propTypes = {
-  route: shape({
-    params: shape({ remain: number }),
-  }).isRequired,
-};
 
 const styles = StyleSheet.create({
   container: {

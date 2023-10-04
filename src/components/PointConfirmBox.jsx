@@ -1,33 +1,38 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import RequestButton from "./RequestButton";
 // eslint-disable-next-line import/order
 import { useNavigation } from "@react-navigation/native";
+import { number, string } from "prop-types";
+import RequestButton from "./RequestButton";
 
-export default function PointConfirmBox() {
+export default function PointConfirmBox(props) {
   const navigation = useNavigation();
+  const {
+    usepoint, fee, remain, month,
+  } = props;
+
   return (
     <View style={styles.point_request_box}>
       <Text style={styles.confirm_message}>この内容で申請しますか。</Text>
       <View style={styles.confirm_line}>
         <Text style={styles.confirm_title}>利用ポイント</Text>
-        <Text style={styles.confirm_data}>60Pt</Text>
+        <Text style={styles.confirm_data}>{`${usepoint}Pt`}</Text>
       </View>
       <View style={styles.confirm_line}>
         <Text style={styles.confirm_title}>受取額</Text>
-        <Text style={styles.confirm_data}>7000円</Text>
+        <Text style={styles.confirm_data}>{`${fee}円`}</Text>
       </View>
       <View style={styles.confirm_line}>
         <Text style={styles.confirm_title}>給与反映月</Text>
-        <Text style={styles.confirm_data}>○月分給与</Text>
+        <Text style={styles.confirm_data}>{`${month}月分給与`}</Text>
       </View>
       <View style={styles.confirm_line}>
         <Text style={styles.confirm_title}>ポイント残高</Text>
-        <Text style={styles.confirm_data}>10Pt</Text>
+        <Text style={styles.confirm_data}>{`${remain}Pt`}</Text>
       </View>
       <RequestButton
         onPress={() => {
-          navigation.navigate("PointUsed");
+          navigation.navigate("PointUsed", { remain });
         }}
       >
         申請する
@@ -36,14 +41,21 @@ export default function PointConfirmBox() {
   );
 }
 
+PointConfirmBox.propTypes = {
+  usepoint: number.isRequired,
+  fee: string.isRequired,
+  remain: number.isRequired,
+  month: number.isRequired,
+};
+
 const styles = StyleSheet.create({
   point_request_box: {
-    width: "95%",
     height: 246,
     backgroundColor: "rgba(165,165,165,0.6)",
     borderRadius: 10,
     paddingHorizontal: 24,
     paddingVertical: 18,
+    marginTop: 20,
   },
   confirm_message: {
     marginBottom: 30,
@@ -53,7 +65,7 @@ const styles = StyleSheet.create({
   confirm_line: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginLeft: 172,
+    marginLeft: 132,
     marginVertical: 5,
   },
   confirm_title: {

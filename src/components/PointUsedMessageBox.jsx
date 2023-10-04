@@ -3,9 +3,11 @@ import {
   View, Text, StyleSheet, TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { number } from "prop-types";
 import SectionTitle from "./SectionTitle";
 
-export default function PointUsedMessageBox() {
+export default function PointUsedMessageBox(props) {
+  const { remain } = props;
   const navigation = useNavigation();
   return (
     <View style={styles.point_used_box}>
@@ -15,7 +17,7 @@ export default function PointUsedMessageBox() {
       </Text>
       <View style={styles.remain_point_frame}>
         <Text style={styles.remain_point_title}>現在のポイント残高</Text>
-        <Text style={styles.remain_point}>10Pt</Text>
+        <Text style={styles.remain_point}>{`${remain}Pt`}</Text>
       </View>
       <View style={styles.btn_frame}>
         <TouchableOpacity
@@ -30,6 +32,10 @@ export default function PointUsedMessageBox() {
     </View>
   );
 }
+
+PointUsedMessageBox.propTypes = {
+  remain: number.isRequired,
+};
 
 const styles = StyleSheet.create({
   point_used_box: {
@@ -72,7 +78,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#A9EA3E",
     borderRadius: 5,
     width: 178,
-    height: 30,
+    height: 38,
     alignItems: "center",
     justifyContent: "center",
     marginTop: 40,

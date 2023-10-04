@@ -14,6 +14,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import SignUpConfirmScreen from "./src/screens/SignUpConfirmScreen";
 import { firebaseConfig } from "./env";
+import PointConfirmScreen from "./src/screens/PointConfirmScreen";
 
 require("firebase/firestore");
 
@@ -55,6 +56,7 @@ export default function App() {
         <Stack.Screen name="SectionList" component={SectionListScreen} />
         <Stack.Screen name="PointDetail" component={PointDetailScreen} />
         <Stack.Screen name="PointRequest" component={PointRequestScreen} />
+        <Stack.Screen name="PointConfirm" component={PointConfirmScreen} />
         <Stack.Screen name="PointUsed" component={PointUsedScreen} />
       </Stack.Navigator>
     </NavigationContainer>

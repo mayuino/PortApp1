@@ -1,7 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View, Text, StyleSheet, ScrollView,
+} from "react-native";
+import {
+  shape, string, instanceOf, arrayOf, number,
+} from "prop-types";
 
-export default function PointDetail() {
+export default function PointDetail(props) {
+  const { points } = props;
+
   return (
     <View style={styles.point_detail_frame}>
       <View>
@@ -9,7 +16,7 @@ export default function PointDetail() {
           <Text>ポイント取得明細</Text>
         </View>
         <View style={styles.point_frame}>
-          <Text style={styles.point_title}>○月分皆勤賞</Text>
+          <Text style={styles.point_title} numberOfLines={1}>○月分皆勤賞</Text>
           <Text style={styles.point_detail}>５pt</Text>
           <Text style={styles.point_date}>2023/8/31</Text>
         </View>
@@ -31,27 +38,29 @@ export default function PointDetail() {
         <View style={styles.point_use_detail_titlebar}>
           <Text>ポイント利用明細</Text>
         </View>
-        <View style={styles.point_frame}>
-          <Text style={styles.point_title}>利用申請</Text>
-          <Text style={styles.point_detail}>10pt</Text>
-          <Text style={styles.point_date}>2023/8/31</Text>
-        </View>
-
-        <View style={styles.point_frame}>
-          <Text style={styles.point_title}>利用申請</Text>
-          <Text style={styles.point_detail}>10pt</Text>
-          <Text style={styles.point_date}>2023/8/31</Text>
-        </View>
-
-        <View style={styles.point_frame}>
-          <Text style={styles.point_title}>利用申請</Text>
-          <Text style={styles.point_detail}>10pt</Text>
-          <Text style={styles.point_date}>2023/8/31</Text>
-        </View>
+        <ScrollView>
+          {points.map((point) => (
+            <View key={point.id} style={styles.point_frame}>
+              <Text style={styles.point_title} numberOfLines={1}>{point.use_objective}</Text>
+              <Text style={styles.point_detail}>{`${point.point}pt`}</Text>
+              <Text style={styles.point_date}>{String(point.updatedAt)}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );
 }
+
+PointDetail.propTypes = {
+  points: arrayOf(
+    shape({
+      point: number,
+      user_objective: string,
+      updatedAt: instanceOf(Date),
+    }),
+  ).isRequired,
+};
 
 const styles = StyleSheet.create({
   point_detail_frame: {
